@@ -11,11 +11,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\ProductImagesUploader\Controller\Admin;
+namespace Plugin\ProductImagesUploader42\Controller\Admin;
 
 use Eccube\Controller\AbstractController;
 use Eccube\Util\StringUtil;
-use Plugin\ProductImagesUploader\Form\Type\Admin\ConfigType;
+use Plugin\ProductImagesUploader42\Form\Type\Admin\ConfigType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -29,8 +29,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ConfigController extends AbstractController
 {
     /**
-     * @Route("/%eccube_admin_route%/product_images_uploader/config", name="product_images_uploader_admin_config")
-     * @Template("@ProductImagesUploader/admin/config.twig")
+     * @Route("/%eccube_admin_route%/product_images_uploader/config", name="product_images_uploader42_admin_config")
+     * @Template("@ProductImagesUploader42/admin/config.twig")
      */
     public function index(Request $request, EventDispatcherInterface $dispatcher)
     {
@@ -61,7 +61,7 @@ class ConfigController extends AbstractController
                 if ($count > 0) {
                     $this->addError('zipファイル内にディレクトリが含まれています。', 'admin');
 
-                    return $this->redirectToRoute('product_images_uploader_admin_config');
+                    return $this->redirectToRoute('product_images_uploader42_admin_config');
                 }
 
                 // save_imageへコピー
@@ -69,11 +69,11 @@ class ConfigController extends AbstractController
 
                 $this->addSuccess('ファイルをアップロードしました。', 'admin');
 
-                return $this->redirectToRoute('product_images_uploader_admin_config');
+                return $this->redirectToRoute('product_images_uploader42_admin_config');
             } else {
                 $this->addError('アップロードに失敗しました。', 'admin');
 
-                return $this->redirectToRoute('product_images_uploader_admin_config');
+                return $this->redirectToRoute('product_images_uploader42_admin_config');
             }
         }
 
