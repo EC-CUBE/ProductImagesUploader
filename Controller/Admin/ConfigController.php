@@ -23,6 +23,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -46,7 +47,7 @@ class ConfigController extends AbstractController
             $tmpDir = \sys_get_temp_dir().'/'.$uniqId;
 
             // 終了時に一時ディレクトリを削除.
-            $dispatcher->addListener(KernelEvents::TERMINATE, function (PostResponseEvent $event) use ($tmpDir, $fs) {
+            $dispatcher->addListener(KernelEvents::TERMINATE, function (TerminateEvent $event) use ($tmpDir, $fs) {
                 $fs->remove($tmpDir);
             });
 
