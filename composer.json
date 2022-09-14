@@ -1,6 +1,6 @@
 {
   "name": "ec-cube/productimagesuploader42",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "商品画像一括アップロードプラグイン",
   "type": "eccube-plugin",
   "require": {
