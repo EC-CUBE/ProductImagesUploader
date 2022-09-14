@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
@@ -64,7 +65,27 @@ class ConfigController extends AbstractController
 
                     return $this->redirectToRoute('product_images_uploader42_admin_config');
                 }
+                $count = $finder->in($tmpDir)
+                    ->files()
+                    ->ignoreDotFiles(false)
+                    ->filter(function (\SplFileInfo $file) {
+                        $file = new File($file->getRealPath());
+                        if (strpos($file->getMimeType(), 'image') === 0) {
 
+                            return false;
+                        }
+                        if (in_array(strtolower($file->getExtension()), ['gif', 'jpg', 'jpeg', 'png'])) {
+
+                            return false;
+                        }
+
+                        return true;
+                    })->count();
+                if ($count > 0) {
+                    $this->addError('zipファイル内に画像以外のファイルが含まれています。', 'admin');
+
+                    return $this->redirectToRoute('product_images_uploader_admin_config');
+                }
                 // save_imageへコピー
                 $fs->mirror($tmpDir, $this->eccubeConfig->get('eccube_save_image_dir'));
 
