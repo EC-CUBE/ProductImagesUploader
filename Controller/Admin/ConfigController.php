@@ -84,7 +84,7 @@ class ConfigController extends AbstractController
                 if ($count > 0) {
                     $this->addError('zipファイル内に画像以外のファイルが含まれています。', 'admin');
 
-                    return $this->redirectToRoute('product_images_uploader_admin_config');
+                    return $this->redirectToRoute('product_images_uploader42_admin_config');
                 }
                 // save_imageへコピー
                 $fs->mirror($tmpDir, $this->eccubeConfig->get('eccube_save_image_dir'));
