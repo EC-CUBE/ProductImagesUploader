@@ -65,4 +65,30 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
         self::assertTrue($fs->exists($file));
         $fs->remove($file);
     }
+
+    public function testDoUploadWithNotImage()
+    {
+        $zip = new UploadedFile(
+            realpath(dirname(__FILE__) . '/../Resource/favicon_and_text.zip'),
+            'favicon_and_text.zip',
+            'application/zip',
+            null,
+            true
+        );
+
+        $this->client->request('POST',
+            $this->generateUrl('product_images_uploader42_admin_config'),
+            [
+                'config' => ['_token' => 'dummy',],
+            ],
+            [
+                'config' => ['image_file' => $zip,],
+            ],
+        );
+
+        self::assertTrue($this->client->getResponse()->isRedirection());
+
+        $crawler = $this->client->request('GET', $this->generateUrl('product_images_uploader42_admin_config'));
+        self::assertSame('zipファイル内に画像以外のファイルが含まれています。', $crawler->filter('div.alert')->text());
+    }
 }
