@@ -5,11 +5,11 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
     - name: Checkout
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased')
-      uses: actions/checkout@master
+      uses: actions/checkout@v4
     - name: Packaging
       if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'prereleased')
       working-directory: ../
