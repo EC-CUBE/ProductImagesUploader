@@ -59,7 +59,8 @@ class ConfigController extends AbstractController
             });
 
             $zip = new \ZipArchive();
-            if ($zip->open($file->getRealPath())) {
+            // ZipArchive::open() は成功時のみ true を返す（失敗時は非 0 のエラーコード）ため厳密比較する.
+            if ($zip->open($file->getRealPath()) === true) {
                 $zip->extractTo($tmpDir);
                 $zip->close();
 
