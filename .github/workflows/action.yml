@@ -15,6 +15,9 @@ jobs:
       working-directory: ../
       run: |
         rm -rf $GITHUB_WORKSPACE/.github
+        # 開発・テスト用ファイルは配布パッケージに含めない
+        rm -f $GITHUB_WORKSPACE/phpstan.neon.dist
+        rm -f $GITHUB_WORKSPACE/Resource/rector.php "$GITHUB_WORKSPACE/Resource/.php-cs-fixer.dist.php"
         find $GITHUB_WORKSPACE -name "dummy" -print0 | xargs -0 rm -rf
         find $GITHUB_WORKSPACE -name ".git*" -and ! -name ".gitkeep" -print0 | xargs -0 rm -rf
         find $GITHUB_WORKSPACE -name ".git*" -type d -print0 | xargs -0 rm -rf
